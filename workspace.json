@@ -1,8 +1,145 @@
 {
   "version": 2,
-  "projects": {},
+  "projects": {
+    "au-store": {
+      "projectType": "application",
+      "root": "apps/au-store",
+      "sourceRoot": "apps/au-store/src",
+      "prefix": "t7",
+      "targets": {
+        "build": {
+          "executor": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/au-store",
+            "index": "apps/au-store/src/index.html",
+            "main": "apps/au-store/src/main.ts",
+            "polyfills": "apps/au-store/src/polyfills.ts",
+            "tsConfig": "apps/au-store/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/au-store/src/favicon.ico",
+              "apps/au-store/src/assets"
+            ],
+            "styles": ["apps/au-store/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/au-store/src/environments/environment.ts",
+                  "with": "apps/au-store/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "executor": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "au-store:build:production"
+            },
+            "development": {
+              "browserTarget": "au-store:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "executor": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "au-store:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/au-store/src/**/*.ts",
+              "apps/au-store/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/au-store"],
+          "options": {
+            "jestConfig": "apps/au-store/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "au-store-e2e": {
+      "root": "apps/au-store-e2e",
+      "sourceRoot": "apps/au-store-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/au-store-e2e/cypress.json",
+            "tsConfig": "apps/au-store-e2e/tsconfig.e2e.json",
+            "devServerTarget": "au-store:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "au-store:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/au-store-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace",
+    "defaultCollection": "@nrwl/angular",
     "packageManager": "yarn"
-  }
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "au-store"
 }
