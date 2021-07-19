@@ -1,5 +1,3 @@
-
-
 # T7
 
 This project was generated using [Nx](https://nx.dev).
@@ -7,6 +5,135 @@ This project was generated using [Nx](https://nx.dev).
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Smart, Extensible Build Framework**
+
+##  Installing Spartacus
+
+First thing is we need yarn, not npm.
+
+```txt
+>npx create-nx-workspace@latest
+npx: installed 48 in 5.089s
+√ Workspace name (e.g., org name)     · clipboard
+√ What to create in the new workspace · angular
+√ Application name                    · cardmatch
+√ Default stylesheet format           · scss
+```
+
+Try to specify the package manager on creation and then configure the workspace manager:
+
+```
+yarn create nx-workspace --package-manager=yarn
+npx json -I -f workspace.json -e "this.cli.packageManager = 'yarn';
+```
+
+So:
+
+```
+npx create-nx-workspace@latest --package-manager=yarn
+Name: t7
+npx json -I -f workspace.json -e "this.cli.packageManager = 'yarn';
+npx: installed 1 in 1.89s
+json: updated "workspace.json" in-place
+```
+
+Add nx globally
+
+```
+yarn global add nx
+```
+
+```
+>nx generate @nrwl/angular:app au-store --routing
+'nx' is not recognized as an internal or external command,
+```
+
+Only worked with npx.  Ran this outside the t7 dir:
+
+```
+npm install -g @nrwl/cli
+nx generate @nrwl/angular:app au-store --routing
+```
+
+How to add Spartacus?
+
+```
+> ng new au-store --style=scss
+> ng add @spartacus/schematics@latest
+```
+
+From demo app
+
+```
+npm add @nrwl/angular
+nx generate @nrwl/angular:app au-store --routing
+```
+
+```
+nx serve au-store
+yarn nx serve 
+```
+
+Add Spartacus
+How to add the app flag?
+
+```
+Could not find project "@spartacus/schematics"
+ng add @spartacus/schematics
+nx add @spartacus/schematics --project=au-store
+ ERROR  Cannot find target 'add' for project 'au-store'
+```
+
+```
+ng add @spartacus/schematics --project=au-store
+The add command requires to be run in an Angular project, but a project definition could not be found.
+```
+
+First:
+
+```
+yarn add  @spartacus/schematics
+```
+
+```
+>nx list @spartacus/schematics
+>  NX  Capabilities in @spartacus/schematics:
+  GENERATORS
+  ng-add : Install and configure spartacus
+  add-spartacus-library : Install a spartacus library
+  add-spartacus : Add spartacus to Angular project.
+  add-pwa : Add PWA to project.
+  add-ssr : Add server-side rendering.
+  add-cms-component : Add a CMS component.
+(angular material example: nx g @angular/material:ng-add)
+```
+
+```
+nx g @spartacus/schematics:ng-add --project=au-store
+Or
+nx g @spartacus/schematics:add-spartacus --project=au-store
+Property 'features' does not match the schema. 'Profile' should be a 'array'.
+```
+
+```
+nx g @spartacus/schematics:ng-add --project=au-store
+```
+
+Might raise an issue on nx for this:
+
+```
+>nx g @spartacus/schematics:add-spartacus --project=au-store
+√ Which Spartacus features would you like to set up?
+Please note that for most Spartacus features to be properly configured, the Account feature is required. · Profile
+Property 'features' does not match the schema. 'Profile' should be a 'array'.
+```
+
+I have added this to my dependencies.
+
+```json
+"@spartacus/schematics": "^3.4.1",
+```
+
+# Original Readme
 
 ## Adding capabilities to your workspace
 
